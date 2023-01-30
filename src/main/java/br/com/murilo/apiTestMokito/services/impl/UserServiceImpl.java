@@ -11,6 +11,7 @@ import br.com.murilo.apiTestMokito.domains.User;
 import br.com.murilo.apiTestMokito.domains.dtos.UserDTO;
 import br.com.murilo.apiTestMokito.repositories.UserRepository;
 import br.com.murilo.apiTestMokito.services.UserService;
+import br.com.murilo.apiTestMokito.services.exceptions.DataIntegratyViolationException;
 import br.com.murilo.apiTestMokito.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -35,7 +36,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User create(UserDTO objDTO) {
+		findByEmail(objDTO);
 		return repository.save(mapper.map(objDTO, User.class));
+	}
+
+	private void findByEmail(UserDTO objDTO) {
+		Optional<User> user = repository.findByEmail(objDTO.getEmail());
+
+		if (user.isPresent()) {
+			throw new DataIntegratyViolationException("E-mail já utilizado!");
+		}
 	}
 
 }
