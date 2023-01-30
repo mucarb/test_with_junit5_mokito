@@ -1,20 +1,18 @@
 package br.com.murilo.apiTestMokito.domains.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserDTO {
 
 	private Integer id;
 	private String name;
 	private String email;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
-			
+
 	public UserDTO() {
 	}
 
-	
-	
 	public UserDTO(Integer id, String name, String email, String password) {
 		this.id = id;
 		this.name = name;
@@ -53,5 +51,5 @@ public class UserDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 }
