@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import br.com.murilo.apiTestMokito.domains.User;
 import br.com.murilo.apiTestMokito.domains.dtos.UserDTO;
 import br.com.murilo.apiTestMokito.repositories.UserRepository;
+import br.com.murilo.apiTestMokito.services.exceptions.ObjectNotFoundException;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -26,6 +27,7 @@ class UserServiceImplTest {
 	private static final String NAME = "Murilo";
 	private static final String EMAIL = "murilo@gmail.com";
 	private static final String PASSWORD = "123";
+	private static final String NOT_FOUND_MESSAGE = "Objeto não encontrado!";
 
 	@InjectMocks
 	private UserServiceImpl service;
@@ -55,6 +57,18 @@ class UserServiceImplTest {
 		assertEquals(ID, response.getId());
 		assertEquals(NAME, response.getName());
 		assertEquals(EMAIL, response.getEmail());
+	}
+	
+	@Test
+	void whenFindByIdThenReturnObjectNotoundExceptionTest() {
+		when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(NOT_FOUND_MESSAGE));
+		
+		try {
+			service.findById(ID);
+		}catch(Exception ex) {
+			assertEquals(ObjectNotFoundException.class, ex.getClass());
+			assertEquals(NOT_FOUND_MESSAGE, ex.getMessage());
+		}
 	}
 
 	@Test
