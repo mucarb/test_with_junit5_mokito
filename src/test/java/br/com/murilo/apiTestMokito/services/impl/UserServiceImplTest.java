@@ -24,7 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import br.com.murilo.apiTestMokito.domains.User;
 import br.com.murilo.apiTestMokito.domains.dtos.UserDTO;
 import br.com.murilo.apiTestMokito.repositories.UserRepository;
-import br.com.murilo.apiTestMokito.services.exceptions.DataIntegratyViolationException;
+import br.com.murilo.apiTestMokito.services.exceptions.DataIntegrityViolationException;
 import br.com.murilo.apiTestMokito.services.exceptions.ObjectNotFoundException;
 
 @SpringBootTest
@@ -111,7 +111,7 @@ class UserServiceImplTest {
 			optionalUser.get().setId(2);
 			service.create(userDTO);
 		} catch (Exception ex) {
-			assertEquals(DataIntegratyViolationException.class, ex.getClass());
+			assertEquals(DataIntegrityViolationException.class, ex.getClass());
 			assertEquals("E-mail já utilizado!", ex.getMessage());
 		}
 	}
@@ -136,7 +136,7 @@ class UserServiceImplTest {
 			optionalUser.get().setId(2);
 			service.update(userDTO);
 		} catch (Exception ex) {
-			assertEquals(DataIntegratyViolationException.class, ex.getClass());
+			assertEquals(DataIntegrityViolationException.class, ex.getClass());
 			assertEquals("E-mail já utilizado!", ex.getMessage());
 		}
 	}

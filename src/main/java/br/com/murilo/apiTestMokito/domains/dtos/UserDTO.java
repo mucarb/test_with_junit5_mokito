@@ -10,9 +10,6 @@ public class UserDTO {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 
-	public UserDTO() {
-	}
-
 	public UserDTO(Integer id, String name, String email, String password) {
 		this.id = id;
 		this.name = name;
