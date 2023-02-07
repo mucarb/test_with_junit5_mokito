@@ -142,7 +142,7 @@ class UserServiceImplTest {
 	}
 	
 	@Test
-	void deleteWithSuccess() {
+	void whenDeleteWithSuccess() {
 		when(repository.findById(anyInt())).thenReturn(optionalUser);
 		doNothing().when(repository).deleteById(anyInt());
 		service.delete(ID);
@@ -150,7 +150,7 @@ class UserServiceImplTest {
 	}
 
 	@Test
-	void deleteWithObjectNotFoundException() {
+	void whenDeleteWithObjectNotFoundException() {
 		when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(NOT_FOUND_MESSAGE));
 		try {
 			service.delete(ID);
